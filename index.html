@@ -124,9 +124,47 @@ nav.scrolled { background: rgba(8,8,8,0.97); }
 .nav-links a:hover::after { transform: scaleX(1); }
 .nav-cta { font-size: 11px; padding: 10px 20px; }
 
+/* Hamburger */
+.hamburger {
+  display: none;
+  flex-direction: column; justify-content: center; gap: 5px;
+  width: 36px; height: 36px;
+  background: none; border: none; cursor: pointer; padding: 4px;
+}
+.hamburger span {
+  display: block; width: 22px; height: 1.5px;
+  background: var(--gold); transition: transform 0.3s, opacity 0.3s;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* Mobile menu */
+.mobile-menu {
+  display: none;
+  position: fixed; top: 64px; left: 0; right: 0; z-index: 99;
+  background: rgba(8,8,8,0.97);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 16px 20px 24px;
+  flex-direction: column; gap: 0;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  color: var(--muted); font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+  text-decoration: none; padding: 14px 0;
+  border-bottom: 1px solid rgba(200,168,75,0.08);
+  transition: color 0.2s;
+}
+.mobile-menu a:last-child { border-bottom: none; }
+.mobile-menu a:hover { color: var(--gold); }
+
 @media(max-width:768px) {
-  nav { padding: 0 20px; }
+  nav { padding: 0 20px; grid-template-columns: auto 1fr auto; }
   .nav-links { display: none; }
+  .nav-cta-wrap { display: none; }
+  .hamburger { display: flex; }
 }
 
 /* Hero */
@@ -521,6 +559,15 @@ echo "Phase 1 done"
   <div class="nav-cta-wrap">
     <button class="btn-gold nav-cta">Order Now</button>
   </div>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<nav class="mobile-menu" id="mobile-menu">
+  <a href="#sauces" class="mobile-link">Sauces</a>
+  <a href="#catering" class="mobile-link">Catering</a>
+  <a href="#story" class="mobile-link">Our Story</a>
+  <a href="#contact" class="mobile-link">Contact</a>
 </nav>
 
 <!-- HERO -->
@@ -918,6 +965,20 @@ echo "Phase 1 done"
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// Hamburger
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+});
+document.querySelectorAll('.mobile-link').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+  });
 });
 
 // Ticker
