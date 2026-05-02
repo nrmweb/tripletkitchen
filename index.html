@@ -215,11 +215,13 @@ nav.scrolled{background:rgba(7,8,10,0.95);border-bottom-color:var(--border)}
 .hero-badge-value{font-family:'Playfair Display',serif;font-size:20px;letter-spacing:0;font-weight:700;color:var(--gold)}
 
 @media(max-width:900px){
-  .hero{flex-direction:column}
-  .hero-photo{min-height:45vh;flex:none;width:100%}
-  .hero-content{width:100%;padding:48px 24px}
+  .hero{position:relative;min-height:100svh;min-height:100vh;display:block}
+  .hero-photo{position:absolute;inset:0;width:100%;height:100%;min-height:unset}
+  .hero-photo img{width:100%;height:100%;object-fit:cover;object-position:center 30%;filter:brightness(0.45) saturate(0.8)}
+  .hero-content{position:relative;z-index:2;width:100%;min-height:100svh;min-height:100vh;padding:100px 28px 48px;display:flex;flex-direction:column;justify-content:flex-end;background:linear-gradient(to top,rgba(12,8,4,0.85) 0%,rgba(12,8,4,0.3) 60%,transparent 100%)}
   .hero-content::before{display:none}
   .hero-badge{bottom:16px;left:16px}
+  .hero-stats{background:transparent;border:none;padding-top:32px}
 }
 
 
